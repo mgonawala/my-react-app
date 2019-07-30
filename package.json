@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "^2.1.1"
   },
-  "homepage": "https://taniarascia.github.io/react-tutorial",
+  "homepage": "https://mgonawala.github.io/my-react-app",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Table from './Table';
 import Form from './Form';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
     state = {
