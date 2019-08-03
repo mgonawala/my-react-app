@@ -35,12 +35,29 @@ class CustomersList extends Component{
     this.refreshCustomers();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.path != this.props.match.path) {
+
+      this.refreshCustomers();
+    }
+  }
+
   refreshCustomers(){
-      AccountsDataService.fetchCustomerDetails()
+    const customerId = this.props.match.params.id;
+      AccountsDataService.fetchCustomerDetails(customerId)
           .then(response => {
-            this.setState({
-              customers : response.data
-            })
+            console.log(response);
+            if(response.data.length != undefined){
+              this.setState({
+                customers: response.data
+              })
+            }
+            else{
+              this.setState({
+                customers : [...this.state.customers, response.data]
+              })
+            }
+
           })
     .catch(error => {
       console.log("Something is been wrong while fetching customers.");
@@ -57,12 +74,13 @@ class CustomersList extends Component{
                 show: false,
                 isResponseShowing: true
               });
-
+            this.props.history.push('/customers');
             })
     .catch(error => {
         this.setState({
           message: error.response.data.errors,
-          show:false
+          show:false,
+          isResponseShowing: true
         })
     });
   }
@@ -141,41 +159,49 @@ class CustomersList extends Component{
   render() {
     return(
     <div className="container">
-      <h3> All Customers </h3>
-      {this.state.message && <ResponseModal show={this.state.isResponseShowing}
-                                            close={this.closeResponseModalHandler}>{
-            this.state.message}
-      </ResponseModal>}
+
+      <div className="row">
+        <div className="col-lg-9">
+          <h3> Customers </h3>
+        </div>
+        <div className="col-ld-2 vertical-center">
+          <button  className="btn btn-outline-primary float-right" onClick={ e => this.openModalHandler()}>Add New Customer</button>
+        </div>
+      </div>
 
 
-      <button  className="btn btn-success float-right" onClick={ e => this.openModalHandler()}>Add New Customer</button>
+
+
+
+
 
       <table className="table">
+        <caption>List of Customers</caption>
         <thead>
         <tr>
-          <th className="text-center">Customer Number</th>
-          <th className="text-center">First Name</th>
-          <th className="text-center">Last Name</th>
-          <th className="text-center">Phone Number</th>
-          <th className="text-center">Email</th>
-          <th className="text-center">Account creation date</th>
-          <th className="text-center">Actions</th>
+          <th >Customer Number</th>
+          <th >First Name</th>
+          <th >Last Name</th>
+          <th >Phone Number</th>
+          <th >Email</th>
+          <th >Account creation date</th>
+          <th >Actions</th>
         </tr>
         </thead>
         <tbody>
         {
           this.state.customers.map(customer =>
               <tr key={customer.id}>
-                <td className="text-center">{customer.id}</td>
-                <td className="text-center">{customer.firstName}</td>
-                <td className="text-center">{customer.lastName}</td>
-                <td className="text-center">{customer.email}</td>
-                <td className="text-center">{customer.phoneNumber}</td>
-                <td className="text-center">{customer.createdDate}</td>
+                <td >{customer.id}</td>
+                <td >{customer.firstName}</td>
+                <td >{customer.lastName}</td>
+                <td >{customer.phoneNumber}</td>
+                <td >{customer.email}</td>
+                <td >{customer.createdDate}</td>
                 <td className="text-nowrap">
                   <div className="float-right">
-                    <button className="btn btn-primary col-sm-6"  onClick={ e => this.openEditModalHandler(customer)}>Edit</button>
-                    <button className="btn btn-warning col-sm-7 offset-md-1"
+                    <button className="btn btn-outline-primary col-sm-6"  onClick={ e => this.openEditModalHandler(customer)}>Edit</button>
+                    <button className="btn btn-outline-primary col-sm-7 offset-md-1"
                     onClick={() => this.goToAccounts(customer.id)}>Accounts</button>
                   </div>
                 </td>
@@ -195,6 +221,11 @@ class CustomersList extends Component{
                  submitClicked={this.customerEditLinkClicked}>
         <AddCustomerForm bindSubmitForm={null} formData={this.state.formData} />
       </FormModal>
+
+      {this.state.message && <ResponseModal show={this.state.isResponseShowing}
+                                            close={this.closeResponseModalHandler}>{
+        this.state.message}
+      </ResponseModal>}
     </div>
 
     );

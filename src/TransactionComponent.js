@@ -107,11 +107,21 @@ class TransactionComponent extends Component{
     };
     return(
         <div className="container">
-        <h1> Transaction Details </h1>
-          {this.state.message && <ResponseModal show={this.state.isResponseShowing}
-                                                close={this.closeResponseModalHandler}>{this.state.message}</ResponseModal>}
-          <button type="button" className="btn btn-success float-right"
-                  onClick={ e => this.openModalHandler()}>Add New Transaction</button>
+
+          <div className="row">
+            <div className="col-lg-9">
+              <h3> Transactions </h3>
+            </div>
+            <div className="col-ld-2 vertical-center">
+              <button className="btn btn-outline-primary float-right"
+                      onClick={ e => this.openModalHandler()}>Add New Transaction</button>
+            </div>
+          </div>
+
+
+
+
+
     <table className="table" >
       <caption>List of Transactions</caption>
       <thead className="thead-light">
@@ -134,7 +144,7 @@ class TransactionComponent extends Component{
               <td >{transaction.amount}</td>
               <td >{transaction.transactionDate}</td>
               <td >{transaction.status}</td>
-              <td ><button className="btn btn-danger"
+              <td ><button className="btn btn-outline-primary"
                            onClick={()=> this.revertTransaction(transaction.id)}>
                 Revert
               </button></td>
@@ -150,6 +160,8 @@ class TransactionComponent extends Component{
             <AddTransactionForm bindSubmitForm={null} accountId={this.props.id}
                                 submitClicked={this.addTransactionClicked}/>
           </FormModal>
+          {this.state.message && <ResponseModal show={this.state.isResponseShowing}
+                                                close={this.closeResponseModalHandler}>{this.state.message}</ResponseModal>}
         </div>
     );
   }

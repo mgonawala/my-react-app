@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BANK_API_URL = 'http://localhost:8585'
+const BANK_API_URL = 'https://blue-harvest-mohini.herokuapp.com'
 const ACCOUNT_API_URL = `${BANK_API_URL}/api/v1/accounts`;
 const CUSTOMER_API_URL = `${BANK_API_URL}/api/v1/customers`;
 
@@ -39,8 +39,13 @@ class AccountsDataService{
     return axios.put(`${ACCOUNT_API_URL}/${account_id}/transactions/${transaction_id}`);
   }
 
-  fetchCustomerDetails(){
-    return axios.get(`${CUSTOMER_API_URL}`);
+  fetchCustomerDetails(id){
+    if( id == undefined)
+      return axios.get(`${CUSTOMER_API_URL}`);
+    else
+    {
+      return axios.get(`${CUSTOMER_API_URL}/${id}`);
+    }
   }
 
   createNewCustomer(values){
@@ -73,6 +78,26 @@ class AccountsDataService{
         'Content-Type':'application/json'
       }
     });
+  }
+
+  addNewAccount(values){
+    const data = {
+      type : values.type,
+      balance : values.balance,
+    }
+
+    const customerId = values.customerId;
+
+    return axios.post(`${CUSTOMER_API_URL}/${customerId}/accounts`,
+        JSON.stringify(data),{
+      headers : {
+        'Content-Type':'application/json'
+      }
+        });
+  }
+
+  getCustomerDetails(id){
+    return axios.get(`${CUSTOMER_API_URL}/${id}`);
   }
 }
 

@@ -40,6 +40,7 @@ class Header extends Component{
                <Route path="/accounts" exact component={AccountsList} />
                <Route path="/accounts/:id" component={TransactionComponent} />
                <Route path="/customers" exact component={CustomersList}/>
+               <Route path="/customers/:id" exact component={CustomersList}/>
                <Route path="/customers/:id/accounts" component={AccountsList}/>
              </Switch>
            </>
