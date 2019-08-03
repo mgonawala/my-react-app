@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import CustomersList from './CustomersList'
+import AccountsList from './AccountsList'
+import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
+import TransactionComponent from "./TransactionComponent";
 
 class Header extends Component{
 
   render() {
     return(
+       <Router>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="/">Blue Harvest</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,10 +19,10 @@ class Header extends Component{
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="/">Accounts <span className="sr-only">(current)</span></a>
+                <Link to="/accounts" className="navbar-brand">Accounts</Link>
               </li>
               <li className="nav-item active">
-                <a className="nav-link" href="/">Customers <span className="sr-only">(current)</span></a>
+                <Link to="/customers" className="navbar-brand">Customers</Link>
               </li>
 
             </ul>
@@ -27,6 +32,19 @@ class Header extends Component{
             </form>
           </div>
         </nav>
+
+
+           <>
+             <Switch>
+               <Route path="/" exact component={AccountsList} />
+               <Route path="/accounts" exact component={AccountsList} />
+               <Route path="/accounts/:id" component={TransactionComponent} />
+               <Route path="/customers" exact component={CustomersList}/>
+               <Route path="/customers/:id/accounts" component={AccountsList}/>
+             </Switch>
+           </>
+
+       </Router>
         )
   }
 }

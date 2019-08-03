@@ -4,9 +4,11 @@ const TableHeader = () => {
     return (
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Job</th>
-                <th>Remove</th>
+                <th>Account ID</th>
+                <th>Account Type</th>
+                <th>Account Balance</th>
+                <th>Account Created Date</th>
+                <th>Account Statement</th>
             </tr>
         </thead>
     );

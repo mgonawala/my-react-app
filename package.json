@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "formik": "^1.5.8",
     "jquery": "^3.4.1",
     "popper": "^1.0.1",
     "popper.js": "^1.15.0",
-    "react": "^16.4.1",
+    "react": "next",
     "react-bootstrap": "^1.0.0-beta.10",
-    "react-dom": "^16.4.1",
+    "react-dom": "next",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "^2.1.1"
   },
   "homepage": "https://mgonawala.github.io/my-react-app",
